@@ -1,23 +1,248 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mi Proyecto Frontend</title>
-  <!-- Tailwind CSS por CDN para diseño sin compilación -->
+  <title>SIGHUNE - Sistema de Gestión</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Iconos de Lucide -->
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen">
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col font-sans">
 
-  <main id="app" class="p-8">
-    <h1 class="text-3xl font-bold text-indigo-400">Proyecto Nuevo - Frontend</h1>
-    <p class="mt-2 text-slate-400">Listo para conectar con GitHub Pages.</p>
+  <!-- Navegación Superior -->
+  <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center space-x-3">
+          <div class="bg-blue-600 p-2 rounded-lg text-white">
+            <i data-lucide="activity" class="w-6 h-6"></i>
+          </div>
+          <span class="font-bold text-xl tracking-wider text-white">SIGHUNE</span>
+        </div>
+        
+        <!-- Menú de pestañas -->
+        <div class="flex space-x-2">
+          <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-btn px-4 py-2 rounded-md text-sm font-medium bg-blue-600 text-white transition-colors">
+            Panel Principal
+          </button>
+          <button onclick="switchTab('usuarios')" id="tab-usuarios" class="tab-btn px-4 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 transition-colors">
+            Gestión Usuarios
+          </button>
+          <button onclick="switchTab('procesos')" id="tab-procesos" class="tab-btn px-4 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 transition-colors">
+            Procesamiento
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenedor de Vistas -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+
+    <!-- VISTA 1: DASHBOARD PRINCIPAL -->
+    <section id="view-dashboard" class="space-y-10">
+      <div>
+        <h1 class="text-3xl font-bold leading-tight text-white">Panel Principal</h1>
+        <p class="mt-2 text-lg text-gray-400">
+          Hola, <span class="font-semibold text-blue-400">Usuario Administrador</span>. Bienvenido de vuelta a SIGHUNE.
+        </p>
+      </div>
+
+      <!-- Métricas / Tarjetas -->
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Tarjeta 1 -->
+        <div class="relative overflow-hidden rounded-xl bg-gray-800 px-4 pt-5 pb-8 shadow-lg sm:px-6 transition-transform duration-300 hover:-translate-y-1">
+          <div class="absolute rounded-md bg-blue-600 p-3">
+            <i data-lucide="users" class="w-6 h-6 text-white"></i>
+          </div>
+          <p class="ml-16 truncate text-sm font-medium text-gray-300">Personal Registrado</p>
+          <div class="ml-16 flex items-baseline pt-2">
+            <p class="text-2xl font-semibold text-white">12</p>
+            <span class="ml-2 flex items-center text-sm font-semibold text-green-400">
+              <i data-lucide="arrow-up-right" class="w-4 h-4 mr-1"></i> En línea
+            </span>
+          </div>
+        </div>
+
+        <!-- Tarjeta 2 -->
+        <div class="relative overflow-hidden rounded-xl bg-gray-800 px-4 pt-5 pb-8 shadow-lg sm:px-6 transition-transform duration-300 hover:-translate-y-1">
+          <div class="absolute rounded-md bg-blue-600 p-3">
+            <i data-lucide="file-text" class="w-6 h-6 text-white"></i>
+          </div>
+          <p class="ml-16 truncate text-sm font-medium text-gray-300">Historias Clínicas Activas</p>
+          <div class="ml-16 flex items-baseline pt-2">
+            <p class="text-2xl font-semibold text-white">1,450</p>
+            <span class="ml-2 flex items-center text-sm font-semibold text-green-400">
+              <i data-lucide="arrow-up-right" class="w-4 h-4 mr-1"></i> Total
+            </span>
+          </div>
+        </div>
+
+        <!-- Tarjeta 3 -->
+        <div class="relative overflow-hidden rounded-xl bg-gray-800 px-4 pt-5 pb-8 shadow-lg sm:px-6 transition-transform duration-300 hover:-translate-y-1">
+          <div class="absolute rounded-md bg-blue-600 p-3">
+            <i data-lucide="shield-alert" class="w-6 h-6 text-white"></i>
+          </div>
+          <p class="ml-16 truncate text-sm font-medium text-gray-300">Movimientos Registrados</p>
+          <div class="ml-16 flex items-baseline pt-2">
+            <p class="text-2xl font-semibold text-white">89</p>
+            <span class="ml-2 flex items-center text-sm font-semibold text-green-400">
+              <i data-lucide="arrow-up-right" class="w-4 h-4 mr-1"></i> Hoy
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Acciones Rápidas -->
+      <div>
+        <h2 class="text-xl font-semibold text-gray-200 mb-4">Acciones Rápidas</h2>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <button onclick="switchTab('usuarios')" class="group flex items-center justify-center rounded-lg border-2 border-dashed border-gray-700 p-6 text-center hover:border-blue-500 hover:bg-gray-800 transition-all duration-200">
+            <i data-lucide="user-plus" class="w-6 h-6 text-gray-400 group-hover:text-blue-500 mr-3 transition-colors"></i>
+            <span class="font-medium text-gray-300 group-hover:text-blue-500 transition-colors">Añadir Nuevo Usuario</span>
+          </button>
+          <button onclick="switchTab('procesos')" class="group flex items-center justify-center rounded-lg border-2 border-dashed border-gray-700 p-6 text-center hover:border-blue-500 hover:bg-gray-800 transition-all duration-200">
+            <i data-lucide="folder-open" class="w-6 h-6 text-gray-400 group-hover:text-blue-500 mr-3 transition-colors"></i>
+            <span class="font-medium text-gray-300 group-hover:text-blue-500 transition-colors">Gestionar Historias</span>
+          </button>
+          <button onclick="switchTab('procesos')" class="group flex items-center justify-center rounded-lg border-2 border-dashed border-gray-700 p-6 text-center hover:border-blue-500 hover:bg-gray-800 transition-all duration-200">
+            <i data-lucide="layout-grid" class="w-6 h-6 text-gray-400 group-hover:text-blue-500 mr-3 transition-colors"></i>
+            <span class="font-medium text-gray-300 group-hover:text-blue-500 transition-colors">Acceder a Procesos</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA 2: GESTIÓN DE USUARIOS -->
+    <section id="view-usuarios" class="space-y-8 hidden">
+      <div>
+        <h1 class="text-3xl font-bold leading-tight text-white">Gestión de Usuarios</h1>
+        <p class="mt-2 text-lg text-gray-400">Crea y administra las cuentas de los miembros del personal.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
+        <!-- Formulario Simulador -->
+        <div class="lg:col-span-3 bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-md">
+          <form onsubmit="event.preventDefault(); alert('Usuario registrado con éxito (Simulación)');" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-300">Nombre Completo</label>
+              <input type="text" placeholder="Ej. Dr. Juan Pérez" class="mt-1 w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-300">Correo Electrónico</label>
+              <input type="email" placeholder="juan.perez@hospital.com" class="mt-1 w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-300">Rol del Personal</label>
+              <select class="mt-1 w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500">
+                <option>Médico General</option>
+                <option>Enfermero/a</option>
+                <option>Administrativo</option>
+              </select>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-lg transition-colors">
+              Registrar Nuevo Usuario
+            </button>
+          </form>
+        </div>
+
+        <!-- Ilustración / Tarjeta Lateral -->
+        <div class="lg:col-span-2 hidden lg:block bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 text-center">
+          <div class="flex justify-center mb-4 text-blue-400">
+            <i data-lucide="user-check" class="w-20 h-20"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-white">Registro Seguro</h3>
+          <p class="text-sm text-gray-400 mt-2">
+            Los datos ingresados formarán parte de la red interna de SIGHUNE.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA 3: PROCESAMIENTO -->
+    <section id="view-procesos" class="space-y-8 hidden">
+      <div>
+        <h1 class="text-3xl font-bold leading-tight text-white">Módulos de Procesamiento</h1>
+        <p class="mt-2 text-lg text-gray-400">Seleccione un módulo para comenzar a procesar la información.</p>
+      </div>
+
+      <!-- Cuadrícula de Módulos -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        
+        <!-- C. Externa -->
+        <div onclick="alert('Módulo de C. Externa seleccionado')" class="bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-blue-500 p-6 rounded-xl text-center cursor-pointer transition-all duration-200 group">
+          <div class="flex justify-center text-blue-400 group-hover:scale-110 transition-transform mb-3">
+            <i data-lucide="users" class="w-10 h-10"></i>
+          </div>
+          <h3 class="font-semibold text-white group-hover:text-blue-400">C. EXTERNA</h3>
+        </div>
+
+        <!-- Hospitalización -->
+        <div onclick="alert('Módulo de Hospitalización seleccionado')" class="bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-blue-500 p-6 rounded-xl text-center cursor-pointer transition-all duration-200 group">
+          <div class="flex justify-center text-blue-400 group-hover:scale-110 transition-transform mb-3">
+            <i data-lucide="building-2" class="w-10 h-10"></i>
+          </div>
+          <h3 class="font-semibold text-white group-hover:text-blue-400">HOSPITALIZACIÓN</h3>
+        </div>
+
+        <!-- Sala -->
+        <div onclick="alert('Módulo de Sala seleccionado')" class="bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-blue-500 p-6 rounded-xl text-center cursor-pointer transition-all duration-200 group">
+          <div class="flex justify-center text-blue-400 group-hover:scale-110 transition-transform mb-3">
+            <i data-lucide="heart-pulse" class="w-10 h-10"></i>
+          </div>
+          <h3 class="font-semibold text-white group-hover:text-blue-400">SALA</h3>
+        </div>
+
+        <!-- Mortuorio -->
+        <div onclick="alert('Módulo de Mortuorio seleccionado')" class="bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-blue-500 p-6 rounded-xl text-center cursor-pointer transition-all duration-200 group">
+          <div class="flex justify-center text-blue-400 group-hover:scale-110 transition-transform mb-3">
+            <i data-lucide="archive" class="w-10 h-10"></i>
+          </div>
+          <h3 class="font-semibold text-white group-hover:text-blue-400">MORTUORIO</h3>
+        </div>
+
+        <!-- Emergencia -->
+        <div onclick="alert('Módulo de Emergencia seleccionado')" class="bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-blue-500 p-6 rounded-xl text-center cursor-pointer transition-all duration-200 group">
+          <div class="flex justify-center text-blue-400 group-hover:scale-110 transition-transform mb-3">
+            <i data-lucide="zap" class="w-10 h-10"></i>
+          </div>
+          <h3 class="font-semibold text-white group-hover:text-blue-400">EMERGENCIA</h3>
+        </div>
+
+      </div>
+    </section>
+
   </main>
 
-  <script src="script.js"></script>
+  <!-- Lógica de navegación simple -->
   <script>
+    function switchTab(tabName) {
+      // Ocultar todas las secciones
+      document.querySelectorAll('section').forEach(sec => sec.classList.add('hidden'));
+      
+      // Resetear estilos de botones
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-blue-600', 'text-white');
+        btn.classList.add('text-gray-300', 'hover:bg-gray-700');
+      });
+
+      // Mostrar la sección seleccionada
+      document.getElementById(`view-${tabName}`).classList.remove('hidden');
+
+      // Resaltar el botón activo
+      const activeBtn = document.getElementById(`tab-${tabName}`);
+      activeBtn.classList.add('bg-blue-600', 'text-white');
+      activeBtn.classList.remove('text-gray-300', 'hover:bg-gray-700');
+    }
+
+    // Inicializar iconos de Lucide
     lucide.createIcons();
   </script>
 </body>
