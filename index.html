@@ -31,47 +31,47 @@
     }
   </style>
 </head>
-<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col font-sans">
+<body class="bg-[#0b101d] text-gray-100 min-h-screen flex flex-col font-sans">
 
   <!-- NAVBAR -->
-  <nav class="bg-gray-900 border-b border-gray-800 shadow-lg sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <nav class="bg-[#0f172a]/90 border-b border-gray-800/80 shadow-lg sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <!-- Logo & Navigation Links -->
+        
+        <!-- Panel Principal-->
         <div class="flex items-center">
-          <div class="flex items-center text-white cursor-pointer" onclick="switchTab('archivo')">
-            <div class="h-8 w-8 mr-2 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
-              <i class="fa-solid fa-hospital text-lg"></i>
+          <div class="flex items-center text-white cursor-pointer group" onclick="switchTab('inicio')">
+            <div class="h-8 w-8 mr-2.5 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold group-hover:bg-blue-500 transition-colors">
+              <i class="fa-solid fa-hospital text-base"></i>
             </div>
-            <span class="text-xl font-bold tracking-tight">SIGHUNE</span>
+            <span class="text-xl font-bold tracking-tight group-hover:text-blue-400 transition-colors">SIGHUNE</span>
           </div>
 
+          <!-- MENÚ PRINCIPAL -->
           <div class="hidden md:block ml-10">
             <div class="flex items-baseline space-x-2">
-              <button id="nav-archivo" onclick="switchTab('archivo')" class="px-4 py-2 rounded-md text-sm font-medium flex items-center bg-blue-600 text-white font-semibold shadow">
+              <button id="nav-archivo" onclick="switchTab('archivo')" class="px-4 py-2 rounded-md text-sm font-medium flex items-center text-gray-300 hover:bg-gray-800 hover:text-white transition-colors">
                 <i class="fa-regular fa-file-lines mr-2"></i> Archivo Clínico
               </button>
-              <button id="nav-usuario" onclick="switchTab('usuario')" class="px-4 py-2 rounded-md text-sm font-medium flex items-center text-gray-300 hover:bg-gray-700/60 hover:text-white">
+              <button id="nav-usuario" onclick="switchTab('usuario')" class="px-4 py-2 rounded-md text-sm font-medium flex items-center text-gray-300 hover:bg-gray-800 hover:text-white transition-colors">
                 <i class="fa-solid fa-users mr-2"></i> Gestión Usuarios
               </button>
-              <button id="nav-procesamiento" onclick="switchTab('procesamiento')" class="px-4 py-2 rounded-md text-sm font-medium flex items-center text-gray-300 hover:bg-gray-700/60 hover:text-white">
+              <button id="nav-procesamiento" onclick="switchTab('procesamiento')" class="px-4 py-2 rounded-md text-sm font-medium flex items-center text-gray-300 hover:bg-gray-800 hover:text-white transition-colors">
                 <i class="fa-solid fa-microchip mr-2"></i> Procesamiento
               </button>
             </div>
           </div>
         </div>
 
-        <!-- User Status Bar -->
         <div class="hidden md:block">
           <div class="flex items-center">
-            <div class="flex items-center mr-4 bg-gray-800/80 px-3 py-1.5 rounded-full border border-gray-700">
-              <i class="fa-regular fa-user text-gray-400 mr-2"></i>
-              <span class="text-gray-200 text-sm font-medium">Admin SIGHUNE</span>
+            <div class="flex items-center bg-gray-800/60 px-3.5 py-1.5 rounded-full border border-gray-700/60">
+              <i class="fa-regular fa-user text-gray-400 mr-2 text-xs"></i>
+              <span class="text-gray-200 text-xs font-medium">Admin SIGHUNE</span>
             </div>
           </div>
         </div>
 
-        <!-- Mobile Menu Toggle Button -->
         <div class="-mr-2 flex md:hidden">
           <button onclick="toggleMobileMenu()" class="bg-gray-800 p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700">
             <i class="fa-solid fa-bars text-xl"></i>
@@ -80,9 +80,8 @@
       </div>
     </div>
 
-    <!-- Mobile Menu Dropdown -->
     <div id="mobile-menu" class="hidden md:hidden bg-gray-900/95 border-b border-gray-800 px-2 pt-2 pb-3 space-y-1">
-      <button onclick="switchTab('archivo'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 flex items-center">
+      <button onclick="switchTab('archivo'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 flex items-center">
         <i class="fa-regular fa-file-lines mr-2"></i> Archivo Clínico
       </button>
       <button onclick="switchTab('usuario'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 flex items-center">
@@ -95,123 +94,206 @@
   </nav>
 
   <!-- MAIN CONTENT -->
-  <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
+  <main class="flex-grow max-w-[1600px] w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
 
-    <!-- SECCIÓN: ARCHIVO CLÍNICO (CITADOS / BÚSQUEDA / MOVIMIENTOS) -->
-    <section id="section-archivo" class="space-y-6">
+    <!-- SECCIÓN: PANEL PRINCIPAL -->
+    <section id="section-inicio" class="space-y-8">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-1">Panel Principal</h1>
+        <p class="text-gray-400 text-sm">
+          Hola, <span class="text-blue-500 font-semibold">Usuario Administrador</span>. Bienvenido de vuelta a SIGHUNE.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        
+        <div class="bg-[#131b2e]/60 border border-gray-800/80 p-5 rounded-2xl flex items-center gap-4 shadow-lg">
+          <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xl shrink-0">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div>
+            <p class="text-xs font-medium text-gray-400">Personal Registrado</p>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span class="text-2xl font-extrabold text-white">12</span>
+              <span class="text-xs text-emerald-400 font-medium flex items-center gap-1">
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> En línea
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-[#131b2e]/60 border border-gray-800/80 p-5 rounded-2xl flex items-center gap-4 shadow-lg">
+          <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xl shrink-0">
+            <i class="fa-solid fa-file-lines"></i>
+          </div>
+          <div>
+            <p class="text-xs font-medium text-gray-400">Historias Clínicas Activas</p>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span class="text-2xl font-extrabold text-white">1,450</span>
+              <span class="text-xs text-emerald-400 font-medium flex items-center gap-1">
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Total
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-[#131b2e]/60 border border-gray-800/80 p-5 rounded-2xl flex items-center gap-4 shadow-lg">
+          <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xl shrink-0">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <p class="text-xs font-medium text-gray-400">Movimientos Registrados</p>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span class="text-2xl font-extrabold text-white">89</span>
+              <span class="text-xs text-emerald-400 font-medium flex items-center gap-1">
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Hoy
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="space-y-4 pt-2">
+        <h2 class="text-lg font-bold text-white">Acciones Rápidas</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          
+          <button onclick="switchTab('usuario')" class="border border-dashed border-gray-700/80 hover:border-blue-500 bg-[#131b2e]/30 hover:bg-[#131b2e]/80 py-5 px-6 rounded-2xl flex items-center justify-center gap-3 text-gray-200 hover:text-white transition-all text-sm font-semibold group cursor-pointer">
+            <i class="fa-solid fa-user-plus text-base text-gray-400 group-hover:text-blue-400 transition-colors"></i>
+            <span>Añadir Nuevo Usuario</span>
+          </button>
+
+          <button onclick="switchTab('archivo')" class="border border-dashed border-gray-700/80 hover:border-blue-500 bg-[#131b2e]/30 hover:bg-[#131b2e]/80 py-5 px-6 rounded-2xl flex items-center justify-center gap-3 text-gray-200 hover:text-white transition-all text-sm font-semibold group cursor-pointer">
+            <i class="fa-regular fa-folder text-base text-gray-400 group-hover:text-blue-400 transition-colors"></i>
+            <span>Gestionar Historias</span>
+          </button>
+
+          <button onclick="switchTab('procesamiento')" class="border border-dashed border-gray-700/80 hover:border-blue-500 bg-[#131b2e]/30 hover:bg-[#131b2e]/80 py-5 px-6 rounded-2xl flex items-center justify-center gap-3 text-gray-200 hover:text-white transition-all text-sm font-semibold group cursor-pointer">
+            <i class="fa-solid fa-border-all text-base text-gray-400 group-hover:text-blue-400 transition-colors"></i>
+            <span>Acceder a Procesos</span>
+          </button>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ARCHIVO -->
+    <section id="section-archivo" class="hidden space-y-6">
       <div>
         <h2 class="text-2xl font-bold text-white tracking-wide">Gestión de Archivo Clínico</h2>
         <p class="text-gray-400 text-sm">Registra salidas de historias clínicas, citados y retorno de archivos.</p>
       </div>
 
-      <!-- FORMULARIO ARCHIVO -->
-      <div class="w-full bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 shadow-xl">
-        <form id="archivo-form" onsubmit="handleArchivoSubmit(event)" class="space-y-5">
-          
-          <div class="flex items-center justify-around p-2 bg-gray-900/50 rounded-lg">
-            <label class="cursor-pointer">
-              <input type="radio" name="estado" value="CITADO" checked onchange="handleEstadoChange()" class="hidden peer">
-              <span class="px-4 py-2 text-sm font-medium text-gray-300 rounded-md transition-colors peer-checked:bg-blue-600 peer-checked:text-white hover:bg-gray-700 block">CITADO</span>
-            </label>
-            <label class="cursor-pointer">
-              <input type="radio" name="estado" value="RETORNADO" onchange="handleEstadoChange()" class="hidden peer">
-              <span class="px-4 py-2 text-sm font-medium text-gray-300 rounded-md transition-colors peer-checked:bg-blue-600 peer-checked:text-white hover:bg-gray-700 block">RETORNADO</span>
-            </label>
-            <label class="cursor-pointer">
-              <input type="radio" name="estado" value="NO UBICADA" onchange="handleEstadoChange()" class="hidden peer">
-              <span class="px-4 py-2 text-sm font-medium text-gray-300 rounded-md transition-colors peer-checked:bg-blue-600 peer-checked:text-white hover:bg-gray-700 block">NO UBICADA</span>
-            </label>
-          </div>
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+        <!-- FORMULARIO -->
+        <div class="xl:col-span-5 bg-gray-800/40 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/80 shadow-xl">
+          <form id="archivo-form" onsubmit="handleArchivoSubmit(event)" class="space-y-4">
+            
+            <div class="flex items-center justify-around p-1.5 bg-gray-900/60 rounded-lg">
+              <label class="cursor-pointer flex-1 text-center">
+                <input type="radio" name="estado" value="CITADO" checked onchange="handleEstadoChange()" class="hidden peer">
+                <span class="py-2 text-xs font-semibold text-gray-300 rounded-md transition-colors peer-checked:bg-blue-600 peer-checked:text-white hover:bg-gray-700 block">CITADO</span>
+              </label>
+              <label class="cursor-pointer flex-1 text-center">
+                <input type="radio" name="estado" value="RETORNADO" onchange="handleEstadoChange()" class="hidden peer">
+                <span class="py-2 text-xs font-semibold text-gray-300 rounded-md transition-colors peer-checked:bg-blue-600 peer-checked:text-white hover:bg-gray-700 block">RETORNADO</span>
+              </label>
+              <label class="cursor-pointer flex-1 text-center">
+                <input type="radio" name="estado" value="NO UBICADA" onchange="handleEstadoChange()" class="hidden peer">
+                <span class="py-2 text-xs font-semibold text-gray-300 rounded-md transition-colors peer-checked:bg-blue-600 peer-checked:text-white hover:bg-gray-700 block">NO UBICADA</span>
+              </label>
+            </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="fecha_atencion" class="form-label-dark">Fecha Atención</label>
+                <input type="date" id="fecha_atencion" class="form-input-dark text-sm disabled:bg-gray-700/50 disabled:cursor-not-allowed">
+              </div>
+              <div class="relative">
+                <label for="historia_id" class="form-label-dark">Nº Historia Clínica (7 dígitos)</label>
+                <input type="text" id="historia_id" maxlength="7" oninput="searchPaciente()" class="form-input-dark text-sm pr-10" placeholder="Ej: 2045073" required>
+                <i class="fa-solid fa-magnifying-glass absolute top-9 right-3 text-xs text-gray-400"></i>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="documento_numero" class="form-label-dark">DNI / Documento</label>
+                <input type="text" id="documento_numero" readonly class="form-input-dark text-sm bg-gray-700/50 cursor-not-allowed">
+              </div>
+              <div>
+                <label class="form-label-dark">Paciente Encontrado</label>
+                <input type="text" id="paciente_nombre" readonly value="---" class="form-input-dark text-sm bg-gray-700/60 cursor-not-allowed text-gray-400">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="consultorio" class="form-label-dark">Consultorio / Destino</label>
+                <input type="text" id="consultorio" list="consultorios-list" placeholder="Ej: CARDIOLOGIA" class="form-input-dark text-sm disabled:bg-gray-700/50 disabled:cursor-not-allowed">
+                <datalist id="consultorios-list">
+                  <option value="CARDIOLOGIA"></option>
+                  <option value="PEDIATRIA"></option>
+                  <option value="MEDICINA GENERAL"></option>
+                  <option value="ODONTOLOGIA"></option>
+                  <option value="GINECOLOGIA"></option>
+                </datalist>
+              </div>
+              <div>
+                <label for="turno" class="form-label-dark">Turno</label>
+                <select id="turno" class="form-input-dark text-sm disabled:bg-gray-700/50 disabled:cursor-not-allowed">
+                  <option value="MAÑANA">MAÑANA</option>
+                  <option value="TARDE">TARDE</option>
+                </select>
+              </div>
+            </div>
+
             <div>
-              <label for="fecha_atencion" class="form-label-dark">Fecha Atención</label>
-              <input type="date" id="fecha_atencion" class="form-input-dark disabled:bg-gray-700/50 disabled:cursor-not-allowed">
+              <label for="observaciones" class="form-label-dark">Observación</label>
+              <textarea id="observaciones" rows="2" class="form-input-dark text-sm disabled:bg-gray-700/50 disabled:cursor-not-allowed" placeholder="Notas adicionales opcionales..."></textarea>
             </div>
-            <div class="relative">
-              <label for="historia_id" class="form-label-dark">Nº Historia Clínica</label>
-              <input type="text" id="historia_id" oninput="searchPaciente()" class="form-input-dark pr-10" placeholder="Escribe H-101 o H-102..." required>
-              <i class="fa-solid fa-magnifying-glass absolute top-9 right-3 text-gray-400"></i>
-            </div>
-          </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label for="documento_numero" class="form-label-dark">DNI / Documento</label>
-              <input type="text" id="documento_numero" readonly class="form-input-dark bg-gray-700/50 cursor-not-allowed">
+            <div class="flex items-center gap-3 pt-2">
+              <button type="submit" class="flex-1 py-2.5 px-3 rounded-lg text-white bg-blue-600 hover:bg-blue-700 text-sm font-semibold transition-colors flex justify-center items-center">
+                <i class="fa-solid fa-floppy-disk mr-2"></i> Guardar Movimiento
+              </button>
+              <button type="button" onclick="resetArchivoForm()" class="py-2.5 px-4 rounded-lg text-white bg-gray-600 hover:bg-gray-500 text-sm font-semibold transition-colors flex justify-center items-center">
+                <i class="fa-solid fa-eraser mr-1.5"></i> Limpiar
+              </button>
             </div>
-            <div>
-              <label class="form-label-dark">Paciente Encontrado</label>
-              <input type="text" id="paciente_nombre" readonly value="---" class="form-input-dark bg-gray-700/60 cursor-not-allowed text-gray-400">
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label for="consultorio" class="form-label-dark">Consultorio / Destino</label>
-              <input type="text" id="consultorio" list="consultorios-list" placeholder="Ej: CARDIOLOGIA" class="form-input-dark disabled:bg-gray-700/50 disabled:cursor-not-allowed">
-              <datalist id="consultorios-list">
-                <option value="CARDIOLOGIA"></option>
-                <option value="PEDIATRIA"></option>
-                <option value="MEDICINA GENERAL"></option>
-                <option value="ODONTOLOGIA"></option>
-                <option value="GINECOLOGIA"></option>
-              </datalist>
-            </div>
-            <div>
-              <label for="turno" class="form-label-dark">Turno</label>
-              <select id="turno" class="form-input-dark disabled:bg-gray-700/50 disabled:cursor-not-allowed">
-                <option value="MAÑANA">MAÑANA</option>
-                <option value="TARDE">TARDE</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label for="observaciones" class="form-label-dark">Observación</label>
-            <textarea id="observaciones" rows="2" class="form-input-dark disabled:bg-gray-700/50 disabled:cursor-not-allowed" placeholder="Notas adicionales opcionales..."></textarea>
-          </div>
-
-          <div class="flex items-center gap-4 pt-2">
-            <button type="submit" class="w-full flex justify-center items-center py-3 px-4 rounded-lg text-white bg-blue-600 hover:bg-blue-700 font-semibold transition-colors">
-              <i class="fa-solid fa-floppy-disk mr-2"></i> Guardar Movimiento
-            </button>
-            <button type="button" onclick="resetArchivoForm()" class="w-full flex justify-center items-center py-3 px-4 rounded-lg text-white bg-gray-600 hover:bg-gray-500 font-semibold transition-colors">
-              <i class="fa-solid fa-eraser mr-2"></i> Limpiar
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- TABLA MOVIMIENTOS -->
-      <div class="w-full bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 overflow-hidden shadow-lg">
-        <div class="p-4 border-b border-gray-700 bg-gray-800/80 flex justify-between items-center">
-          <h3 class="text-lg font-semibold text-white">Movimientos Recientes</h3>
-          <span class="text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2.5 py-1 rounded-full font-medium">Actualizado</span>
+          </form>
         </div>
-        
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm text-left text-gray-300">
-            <thead class="text-xs text-gray-400 uppercase bg-gray-900/60 border-b border-gray-700">
-              <tr>
-                <th class="px-6 py-3.5">Historia</th>
-                <th class="px-6 py-3.5">Paciente</th>
-                <th class="px-6 py-3.5">Destino</th>
-                <th class="px-6 py-3.5">Estado</th>
-                <th class="px-6 py-3.5">F. Salida</th>
-                <th class="px-6 py-3.5">F. Devolución</th>
-                <th class="px-6 py-3.5">Observaciones</th>
-              </tr>
-            </thead>
-            <tbody id="tabla-movimientos-body" class="divide-y divide-gray-700/50">
-              <!-- Carga dinámicamente -->
-            </tbody>
-          </table>
+
+        <!-- TABLA MOVIMIENTOS -->
+        <div class="xl:col-span-7 bg-gray-800/40 backdrop-blur-sm rounded-2xl border border-gray-700/80 overflow-hidden shadow-xl">
+          <div class="p-4 border-b border-gray-700 bg-gray-800/80 flex justify-between items-center">
+            <h3 class="text-base font-semibold text-white">Movimientos Recientes</h3>
+            <span class="text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2.5 py-1 rounded-full font-medium">Actualizado</span>
+          </div>
+          
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left text-gray-300">
+              <thead class="text-xs text-gray-400 uppercase bg-gray-900/80 border-b border-gray-700">
+                <tr>
+                  <th class="px-3 py-3">Historia</th>
+                  <th class="px-3 py-3">Paciente</th>
+                  <th class="px-3 py-3">Destino</th>
+                  <th class="px-3 py-3">Estado</th>
+                  <th class="px-3 py-3">F. Salida</th>
+                  <th class="px-3 py-3">F. Devolución</th>
+                  <th class="px-3 py-3">Obs.</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-movimientos-body" class="divide-y divide-gray-700/50">
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- SECCIÓN: GESTIÓN DE USUARIOS (CREAR Y BUSCAR) -->
+    <!-- GESTIÓN DE USUARIOS -->
     <section id="section-usuario" class="hidden space-y-6">
       <div>
         <h2 class="text-2xl font-bold text-white tracking-wide">Gestión de Usuarios</h2>
@@ -219,8 +301,7 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- FORMULARIO CREAR USUARIO (Columna Izquierda: 5 espacios) -->
-        <div class="lg:col-span-5 bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 shadow-xl">
+        <div class="lg:col-span-5 bg-gray-800/40 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/80 shadow-xl">
           <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
             <i class="fa-solid fa-user-plus text-blue-500 mr-2"></i> Registrar Nuevo Usuario
           </h3>
@@ -248,21 +329,29 @@
           </form>
         </div>
 
-        <!-- TABLA BÚSQUEDA DE USUARIOS (Columna Derecha: 7 espacios) -->
-        <div class="lg:col-span-7 bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 shadow-xl flex flex-col justify-between">
+        <div class="lg:col-span-7 bg-gray-800/40 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/80 shadow-xl flex flex-col justify-between">
           <div>
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <h3 class="text-lg font-semibold text-white flex items-center">
                 <i class="fa-solid fa-users-viewfinder text-blue-500 mr-2"></i> Personal Registrado
               </h3>
-              <!-- Buscador en Tabla -->
-              <div class="relative">
-                <input type="text" id="buscar_usuario" oninput="filterUsuarios()" placeholder="Buscar usuario..." class="form-input-dark text-xs py-1.5 pr-8 w-full sm:w-48">
-                <i class="fa-solid fa-search absolute top-2.5 right-2.5 text-xs text-gray-400"></i>
+              
+              <div class="flex items-center gap-2">
+                <select id="filtro_rol" onchange="filterUsuarios()" class="form-input-dark text-xs py-1.5 px-2 w-32 bg-gray-900 border-gray-700">
+                  <option value="TODOS">Todos los roles</option>
+                  <option value="Médico General">Médico General</option>
+                  <option value="Personal de Archivo">Personal de Archivo</option>
+                  <option value="Enfermería">Enfermería</option>
+                  <option value="Administrador">Administrador</option>
+                </select>
+
+                <div class="relative">
+                  <input type="text" id="buscar_usuario" oninput="filterUsuarios()" placeholder="Buscar usuario..." class="form-input-dark text-xs py-1.5 pr-8 w-36 sm:w-44">
+                  <i class="fa-solid fa-search absolute top-2.5 right-2.5 text-xs text-gray-400"></i>
+                </div>
               </div>
             </div>
 
-            <!-- Tabla de Usuarios -->
             <div class="overflow-x-auto rounded-lg border border-gray-700">
               <table class="w-full text-sm text-left text-gray-300">
                 <thead class="text-xs text-gray-400 uppercase bg-gray-900/80">
@@ -273,7 +362,6 @@
                   </tr>
                 </thead>
                 <tbody id="tabla-usuarios-body" class="divide-y divide-gray-700/50">
-                  <!-- Carga dinámicamente -->
                 </tbody>
               </table>
             </div>
@@ -283,41 +371,129 @@
       </div>
     </section>
 
-    <!-- SECCIÓN: PROCESAMIENTO -->
+    <!--  PROCESAMIENTO -->
     <section id="section-procesamiento" class="hidden space-y-6">
-      <h2 class="text-2xl font-bold text-white tracking-wide">Módulo de Procesamiento</h2>
-      <div class="p-8 bg-gray-800/40 rounded-2xl border border-gray-700 text-center space-y-4">
-        <i class="fa-solid fa-microchip text-5xl text-blue-500 animate-pulse"></i>
-        <h3 class="text-xl font-semibold text-white">Procesamiento de Archivos en Lote</h3>
-        <p class="text-gray-400 max-w-lg mx-auto">Sincroniza y procesa volúmenes masivos de registros e historias clínicas.</p>
+      <div>
+        <h2 class="text-2xl font-bold text-white tracking-wide">Módulos de Procesamiento</h2>
+        <p class="text-gray-400 text-sm">Selecciona un módulo para procesar la información del sistema.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- C. EXTERNA -->
+        <a href="/dashboard/procesamiento/consulta-externa" onclick="event.preventDefault(); alert('Navegando a Consulta Externa');" class="bg-gray-800/40 hover:bg-gray-800/80 border border-gray-700/80 hover:border-blue-500/50 rounded-2xl p-6 text-center cursor-pointer transition-all shadow-lg group block">
+          <div class="w-14 h-14 mx-auto mb-4 bg-blue-500/10 text-blue-400 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-users text-2xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-1">C. EXTERNA</h3>
+          <p class="text-xs text-gray-400">Atención en consulta externa y citas ambulatorias.</p>
+        </a>
+
+        <!-- HOSPITALIZACION -->
+        <a href="/dashboard/procesamiento/hospitalizacion" onclick="event.preventDefault(); alert('Navegando a Hospitalización');" class="bg-gray-800/40 hover:bg-gray-800/80 border border-gray-700/80 hover:border-blue-500/50 rounded-2xl p-6 text-center cursor-pointer transition-all shadow-lg group block">
+          <div class="w-14 h-14 mx-auto mb-4 bg-blue-500/10 text-blue-400 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-hospital-user text-2xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-1">HOSPITALIZACION</h3>
+          <p class="text-xs text-gray-400">Control de camas, ingresos y egresos de pacientes.</p>
+        </a>
+
+        <!-- SALA -->
+        <a href="/dashboard/procesamiento/sala" onclick="event.preventDefault(); alert('Navegando a Sala');" class="bg-gray-800/40 hover:bg-gray-800/80 border border-gray-700/80 hover:border-blue-500/50 rounded-2xl p-6 text-center cursor-pointer transition-all shadow-lg group block">
+          <div class="w-14 h-14 mx-auto mb-4 bg-blue-500/10 text-blue-400 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-heart-pulse text-2xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-1">SALA</h3>
+          <p class="text-xs text-gray-400">Programación de intervenciones y sala de operaciones.</p>
+        </a>
+
+        <!-- MORTUORIO -->
+        <a href="/dashboard/procesamiento/mortuorio" onclick="event.preventDefault(); alert('Navegando a Mortuorio');" class="bg-gray-800/40 hover:bg-gray-800/80 border border-gray-700/80 hover:border-blue-500/50 rounded-2xl p-6 text-center cursor-pointer transition-all shadow-lg group block">
+          <div class="w-14 h-14 mx-auto mb-4 bg-blue-500/10 text-blue-400 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-box-archive text-2xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-1">MORTUORIO</h3>
+          <p class="text-xs text-gray-400">Registro y transferencia a mortuorio.</p>
+        </a>
+
+        <!-- EMERGENCIA -->
+        <a href="/dashboard/procesamiento/emergencia" onclick="event.preventDefault(); alert('Navegando a Emergencia');" class="bg-gray-800/40 hover:bg-gray-800/80 border border-gray-700/80 hover:border-blue-500/50 rounded-2xl p-6 text-center cursor-pointer transition-all shadow-lg group block">
+          <div class="w-14 h-14 mx-auto mb-4 bg-blue-500/10 text-blue-400 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-bolt text-2xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-1">EMERGENCIA</h3>
+          <p class="text-xs text-gray-400">Atenciones urgentes y triaje de emergencia.</p>
+        </a>
+
       </div>
     </section>
 
   </main>
 
+  <!-- FOOTER INSTITUCIONAL -->
+  <footer class="bg-[#0f172a] text-gray-300 shadow-inner mt-auto border-t border-gray-800/80">
+    <div class="max-w-[1600px] mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
+        
+        <!-- Logo e Identidad -->
+        <div class="flex items-center">
+          <div class="h-10 w-10 mr-3 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold">
+            <i class="fa-solid fa-hospital text-lg"></i>
+          </div>
+          <span class="text-xl font-semibold text-white tracking-wide">
+            SIGHUNE
+          </span>
+        </div>
+
+        <!-- Información Institucional -->
+        <div class="text-center md:text-right">
+          <p class="text-sm text-gray-300">
+            © <span id="footer-year">2026</span> SIGHUNE. Todos los derechos reservados.
+          </p>
+          <p class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-medium">
+            SISTEMA INTRANET DE GESTIÓN DE HISTORIAS PARA EL HOSPITAL UNIDAD NACIONAL DE EMERGENCIAS
+          </p>
+        </div>
+      </div>
+
+      <!-- Enlaces Legales -->
+      <div class="mt-4 pt-4 border-t border-gray-800/80 text-center text-xs text-gray-400 flex flex-wrap justify-center gap-3">
+        <a href="/privacy-policy" onclick="event.preventDefault();" class="hover:text-blue-400 transition-colors duration-200">
+          Política de Privacidad
+        </a>
+        <span class="text-gray-600">|</span>
+        <a href="/terms-of-service" onclick="event.preventDefault();" class="hover:text-blue-400 transition-colors duration-200">
+          Términos de Servicio
+        </a>
+        <span class="text-gray-600">|</span>
+        <a href="/contact" onclick="event.preventDefault();" class="hover:text-blue-400 transition-colors duration-200">
+          Contacto
+        </a>
+      </div>
+    </div>
+  </footer>
+
   <script>
-    // BD MOCK DE PACIENTES
+    // BD MOCK DE PACIENTES CON HISTORIAS DE 7 DÍGITOS
     const pacientesDB = {
-      "H-101": { nombre: "Juan", apellidos: "Pérez Gómez", documento_numero: "74839201" },
-      "H-102": { nombre: "María", apellidos: "Torres López", documento_numero: "45920182" },
-      "H-103": { nombre: "Carlos", apellidos: "Mendoza Ruiz", documento_numero: "10293847" }
+      "1111111": { nombre: "Juan", apellidos: "Pérez Gómez", documento_numero: "74839201" },
+      "2045073": { nombre: "María", apellidos: "Torres López", documento_numero: "45920182" },
+      "1864767": { nombre: "Carlos", apellidos: "Mendoza Ruiz", documento_numero: "10293847" }
     };
 
-    // MOVIMIENTOS INICIALES
     let movimientosData = [
       {
         id: 1,
-        historia_id: "H-101",
-        paciente_nombre: "Pérez Gómez, Juan",
+        historia_id: "2045073",
+        paciente_nombre: "Torres López, María",
         consultorio: "CARDIOLOGIA",
         estado: "CITADO",
-        fecha_salida: new Date().toISOString(),
+        fecha_salida: "2026-08-01",
         fecha_devolucion: null,
         observaciones: "Atención por la mañana"
       }
     ];
 
-    // USUARIOS INICIALES
     let usuariosData = [
       { id: 1, nombre: "Dr. Juan Pérez", email: "juan.perez@hospital.com", rol: "Médico General" },
       { id: 2, nombre: "Lic. Ana Gómez", email: "ana.gomez@hospital.com", rol: "Personal de Archivo" },
@@ -327,33 +503,36 @@
     let currentPatient = null;
 
     document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("footer-year").textContent = new Date().getFullYear();
       document.getElementById("fecha_atencion").value = new Date().toISOString().split("T")[0];
       renderMovimientosTable();
       renderUsuariosTable(usuariosData);
     });
 
-    // CAMBIO DE PESTAÑAS
     function switchTab(tab) {
+      document.getElementById("section-inicio").classList.add("hidden");
       document.getElementById("section-archivo").classList.add("hidden");
       document.getElementById("section-usuario").classList.add("hidden");
       document.getElementById("section-procesamiento").classList.add("hidden");
 
-      const inactiveClass = "px-4 py-2 rounded-md text-sm font-medium flex items-center text-gray-300 hover:bg-gray-700/60 hover:text-white";
-      const activeClass = "px-4 py-2 rounded-md text-sm font-medium flex items-center bg-blue-600 text-white font-semibold shadow";
+      const inactiveClass = "px-4 py-2 rounded-md text-sm font-medium flex items-center text-gray-300 hover:bg-gray-800 hover:text-white transition-colors";
+      const activeClass = "px-4 py-2 rounded-md text-sm font-medium flex items-center bg-blue-600 text-white font-semibold shadow transition-colors";
 
-      document.getElementById("nav-archivo").className = inactiveClass;
-      document.getElementById("nav-usuario").className = inactiveClass;
-      document.getElementById("nav-procesamiento").className = inactiveClass;
+      if (document.getElementById("nav-archivo")) document.getElementById("nav-archivo").className = inactiveClass;
+      if (document.getElementById("nav-usuario")) document.getElementById("nav-usuario").className = inactiveClass;
+      if (document.getElementById("nav-procesamiento")) document.getElementById("nav-procesamiento").className = inactiveClass;
 
       document.getElementById(`section-${tab}`).classList.remove("hidden");
-      document.getElementById(`nav-${tab}`).className = activeClass;
+      
+      if (tab !== 'inicio' && document.getElementById(`nav-${tab}`)) {
+        document.getElementById(`nav-${tab}`).className = activeClass;
+      }
     }
 
     function toggleMobileMenu() {
       document.getElementById("mobile-menu").classList.toggle("hidden");
     }
 
-    // FORMULARIO ARCHIVO
     function handleEstadoChange() {
       const estado = document.querySelector('input[name="estado"]:checked').value;
       const isReturn = estado === "RETORNADO";
@@ -365,7 +544,7 @@
     }
 
     function searchPaciente() {
-      const val = document.getElementById("historia_id").value.trim().toUpperCase();
+      const val = document.getElementById("historia_id").value.trim();
       const patient = pacientesDB[val];
       const inputNombre = document.getElementById("paciente_nombre");
       const inputDni = document.getElementById("documento_numero");
@@ -373,12 +552,12 @@
       if (patient) {
         currentPatient = patient;
         inputNombre.value = `${patient.apellidos}, ${patient.nombre}`;
-        inputNombre.className = "form-input-dark bg-gray-700/60 cursor-not-allowed text-green-300 font-medium";
+        inputNombre.className = "form-input-dark text-sm bg-gray-700/60 cursor-not-allowed text-green-300 font-medium";
         inputDni.value = patient.documento_numero;
       } else {
         currentPatient = null;
         inputNombre.value = "---";
-        inputNombre.className = "form-input-dark bg-gray-700/60 cursor-not-allowed text-gray-400";
+        inputNombre.className = "form-input-dark text-sm bg-gray-700/60 cursor-not-allowed text-gray-400";
         inputDni.value = "";
       }
     }
@@ -386,19 +565,19 @@
     function handleArchivoSubmit(e) {
       e.preventDefault();
       if (!currentPatient) {
-        alert("Ingrese un Nº de Historia válido (Prueba con H-101 o H-102)");
+        alert("Ingrese un Nº de Historia válido (Prueba con 1111111, 2045073 o 1864767)");
         return;
       }
 
       const estado = document.querySelector('input[name="estado"]:checked').value;
       movimientosData.unshift({
         id: Date.now(),
-        historia_id: document.getElementById("historia_id").value.toUpperCase(),
+        historia_id: document.getElementById("historia_id").value.trim(),
         paciente_nombre: `${currentPatient.apellidos}, ${currentPatient.nombre}`,
         consultorio: document.getElementById("consultorio").value || "---",
         estado: estado,
-        fecha_salida: new Date().toISOString(),
-        fecha_devolucion: estado === "RETORNADO" ? new Date().toISOString() : null,
+        fecha_salida: new Date().toISOString().split("T")[0],
+        fecha_devolucion: estado === "RETORNADO" ? new Date().toISOString().split("T")[0] : null,
         observaciones: document.getElementById("observaciones").value || ""
       });
 
@@ -423,18 +602,17 @@
 
       tbody.innerHTML = movimientosData.map(mov => `
         <tr class="hover:bg-gray-700/30 border-b border-gray-700/50">
-          <td class="px-6 py-4 font-mono text-blue-400 font-semibold">${mov.historia_id}</td>
-          <td class="px-6 py-4 text-white font-medium">${mov.paciente_nombre}</td>
-          <td class="px-6 py-4">${mov.consultorio}</td>
-          <td class="px-6 py-4"><span class="px-2.5 py-1 text-xs font-semibold rounded-full ${estadoColors[mov.estado]}">${mov.estado}</span></td>
-          <td class="px-6 py-4 whitespace-nowrap">${new Date(mov.fecha_salida).toLocaleDateString()}</td>
-          <td class="px-6 py-4 whitespace-nowrap">${mov.fecha_devolucion ? new Date(mov.fecha_devolucion).toLocaleDateString() : '---'}</td>
-          <td class="px-6 py-4 text-gray-400 max-w-[180px] truncate">${mov.observaciones || '---'}</td>
+          <td class="px-3 py-3 font-mono text-blue-400 font-semibold">${mov.historia_id}</td>
+          <td class="px-3 py-3 text-white font-medium">${mov.paciente_nombre}</td>
+          <td class="px-3 py-3">${mov.consultorio}</td>
+          <td class="px-3 py-3"><span class="px-2 py-0.5 text-[10px] font-semibold rounded-full ${estadoColors[mov.estado]}">${mov.estado}</span></td>
+          <td class="px-3 py-3 whitespace-nowrap">${mov.fecha_salida}</td>
+          <td class="px-3 py-3 whitespace-nowrap">${mov.fecha_devolucion ? mov.fecha_devolucion : '---'}</td>
+          <td class="px-3 py-3 text-gray-400 max-w-[120px] truncate">${mov.observaciones || '---'}</td>
         </tr>
       `).join('');
     }
 
-    // FORMULARIO Y BÚSQUEDA DE USUARIOS
     function handleUserSubmit(e) {
       e.preventDefault();
       const nuevoUsuario = {
@@ -445,7 +623,7 @@
       };
 
       usuariosData.unshift(nuevoUsuario);
-      renderUsuariosTable(usuariosData);
+      filterUsuarios();
 
       document.getElementById("user_nombre").value = "";
       document.getElementById("user_email").value = "";
@@ -462,18 +640,21 @@
         <tr class="hover:bg-gray-700/30 border-b border-gray-700/50">
           <td class="px-4 py-3 font-medium text-white">${u.nombre}</td>
           <td class="px-4 py-3 text-gray-400 text-xs">${u.email}</td>
-          <td class="px-4 py-3"><span class="px-2 py-0.5 text-xs bg-gray-700 text-blue-300 rounded">${u.rol}</span></td>
+          <td class="px-4 py-3"><span class="px-2 py-0.5 text-xs bg-gray-700 text-blue-300 rounded font-medium">${u.rol}</span></td>
         </tr>
       `).join('');
     }
 
     function filterUsuarios() {
       const query = document.getElementById("buscar_usuario").value.toLowerCase();
-      const filtered = usuariosData.filter(u => 
-        u.nombre.toLowerCase().includes(query) || 
-        u.email.toLowerCase().includes(query) ||
-        u.rol.toLowerCase().includes(query)
-      );
+      const rolSeleccionado = document.getElementById("filtro_rol").value;
+
+      const filtered = usuariosData.filter(u => {
+        const matchesQuery = u.nombre.toLowerCase().includes(query) || u.email.toLowerCase().includes(query);
+        const matchesRol = rolSeleccionado === "TODOS" || u.rol === rolSeleccionado;
+        return matchesQuery && matchesRol;
+      });
+
       renderUsuariosTable(filtered);
     }
   </script>
