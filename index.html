@@ -1,249 +1,421 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SIGHUNE - Sistema de Gestión</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIGHUNE - Sistema de Gestión Hospitalaria</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .form-label-dark {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 0.500;
+      color: #d1d5db;
+      margin-bottom: 0.25rem;
     }
-  </script>
+    .form-input-dark {
+      width: 100%;
+      background-color: rgba(17, 24, 39, 0.6);
+      border: 1px solid #374151;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      color: #ffffff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input-dark:focus {
+      border-color: #3b82f6;
+    }
+    .form-error-dark {
+      color: #f87171;
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+    }
+  </style>
 </head>
-<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col font-sans">
+<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col font-sans">
 
-  <!-- Navegación Superior -->
-  <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+  <!-- NAVBAR (Basado en menu-navbar.tsx) -->
+  <nav class="bg-gray-900 border-b border-gray-800 shadow-lg sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <div class="flex items-center space-x-3">
-          <div class="bg-blue-600 p-2 rounded-lg text-white">
-            <i data-lucide="activity" class="w-6 h-6"></i>
+        <!-- Logo & Navigation Links -->
+        <div class="flex items-center">
+          <div class="flex items-center text-white cursor-pointer" onclick="switchTab('archivo')">
+            <div class="h-8 w-8 mr-2 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
+              <i class="fa-solid fa-hospital text-lg"></i>
+            </div>
+            <span class="text-xl font-bold tracking-tight">SIGHUNE</span>
           </div>
-          <span class="font-bold text-xl tracking-wider text-white">SIGHUNE</span>
+
+          <div class="hidden md:block ml-10">
+            <div class="flex items-baseline space-x-2">
+              <button id="nav-archivo" onclick="switchTab('archivo')" class="px-3 py-2 rounded-md text-sm font-medium flex items-center bg-gray-800 text-white">
+                <i class="fa-regular fa-file-lines mr-2"></i> Archivo
+              </button>
+              <button id="nav-procesamiento" onclick="switchTab('procesamiento')" class="px-3 py-2 rounded-md text-sm font-medium flex items-center text-gray-300 hover:bg-gray-700/60 hover:text-white">
+                <i class="fa-solid fa-microchip mr-2"></i> Procesamiento
+              </button>
+              <button id="nav-usuario" onclick="switchTab('usuario')" class="px-3 py-2 rounded-md text-sm font-medium flex items-center text-gray-300 hover:bg-gray-700/60 hover:text-white">
+                <i class="fa-solid fa-users mr-2"></i> Usuarios
+              </button>
+            </div>
+          </div>
         </div>
-        
-        <!-- Menú de pestañas -->
-        <div class="flex space-x-2">
-          <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-btn px-4 py-2 rounded-md text-sm font-medium bg-blue-600 text-white transition-colors">
-            Panel Principal
-          </button>
-          <button onclick="switchTab('usuarios')" id="tab-usuarios" class="tab-btn px-4 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 transition-colors">
-            Gestión Usuarios
-          </button>
-          <button onclick="switchTab('procesos')" id="tab-procesos" class="tab-btn px-4 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 transition-colors">
-            Procesamiento
+
+        <!-- User Status Bar -->
+        <div class="hidden md:block">
+          <div class="flex items-center">
+            <div class="flex items-center mr-4 bg-gray-800/80 px-3 py-1.5 rounded-full border border-gray-700">
+              <i class="fa-regular fa-user text-gray-400 mr-2"></i>
+              <span class="text-gray-200 text-sm font-medium">Admin SIGHUNE</span>
+            </div>
+            <button onclick="alert('Sesión simulada finalizada')" class="bg-red-600/90 hover:bg-red-600 text-white px-3 py-2 rounded-md text-sm font-medium flex items-center transition-colors">
+              <i class="fa-solid fa-right-from-bracket mr-1.5"></i> Cerrar Sesión
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <div class="-mr-2 flex md:hidden">
+          <button onclick="toggleMobileMenu()" class="bg-gray-800 p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+            <i class="fa-solid fa-bars text-xl"></i>
           </button>
         </div>
       </div>
     </div>
+
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-gray-900/95 border-b border-gray-800 px-2 pt-2 pb-3 space-y-1">
+      <button onclick="switchTab('archivo'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white bg-gray-800 flex items-center">
+        <i class="fa-regular fa-file-lines mr-2"></i> Archivo
+      </button>
+      <button onclick="switchTab('procesamiento'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 flex items-center">
+        <i class="fa-solid fa-microchip mr-2"></i> Procesamiento
+      </button>
+      <button onclick="switchTab('usuario'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 flex items-center">
+        <i class="fa-solid fa-users mr-2"></i> Usuarios
+      </button>
+    </div>
   </nav>
 
-  <!-- Contenedor de Vistas -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+  <!-- MAIN CONTENT AREA -->
+  <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
 
-    <!-- VISTA 1: DASHBOARD PRINCIPAL -->
-    <section id="view-dashboard" class="space-y-10">
-      <div>
-        <h1 class="text-3xl font-bold leading-tight text-white">Panel Principal</h1>
-        <p class="mt-2 text-lg text-gray-400">
-          Hola, <span class="font-semibold text-blue-400">Usuario Administrador</span>. Bienvenido de vuelta a SIGHUNE.
-        </p>
-      </div>
+    <!-- SECCIÓN: ARCHIVO (FORMULARIO Y TABLA INTEGRADOS) -->
+    <section id="section-archivo" class="space-y-6">
+      <h2 class="text-2xl font-bold text-white tracking-wide">Gestión de Archivo Clínico</h2>
 
-      <!-- Métricas / Tarjetas -->
-      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        <!-- Tarjeta 1 -->
-        <div class="relative overflow-hidden rounded-xl bg-gray-800 px-4 pt-5 pb-8 shadow-lg sm:px-6 transition-transform duration-300 hover:-translate-y-1">
-          <div class="absolute rounded-md bg-blue-600 p-3">
-            <i data-lucide="users" class="w-6 h-6 text-white"></i>
+      <!-- ARCHIVO FORM (Basado en ArchivoForm.tsx) -->
+      <div class="w-full bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 shadow-xl">
+        <form id="archivo-form" onsubmit="handleArchivoSubmit(event)" class="space-y-5">
+          
+          <!-- Radios para Estado -->
+          <div class="flex items-center justify-around p-2 bg-gray-900/50 rounded-lg">
+            <label class="cursor-pointer">
+              <input type="radio" name="estado" value="CITADO" checked onchange="handleEstadoChange()" class="hidden peer">
+              <span class="px-4 py-2 text-sm font-medium text-gray-300 rounded-md transition-colors peer-checked:bg-blue-600 peer-checked:text-white hover:bg-gray-700 block">CITADO</span>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="estado" value="RETORNADO" onchange="handleEstadoChange()" class="hidden peer">
+              <span class="px-4 py-2 text-sm font-medium text-gray-300 rounded-md transition-colors peer-checked:bg-blue-600 peer-checked:text-white hover:bg-gray-700 block">RETORNADO</span>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="estado" value="NO UBICADA" onchange="handleEstadoChange()" class="hidden peer">
+              <span class="px-4 py-2 text-sm font-medium text-gray-300 rounded-md transition-colors peer-checked:bg-blue-600 peer-checked:text-white hover:bg-gray-700 block">NO UBICADA</span>
+            </label>
           </div>
-          <p class="ml-16 truncate text-sm font-medium text-gray-300">Personal Registrado</p>
-          <div class="ml-16 flex items-baseline pt-2">
-            <p class="text-2xl font-semibold text-white">12</p>
-            <span class="ml-2 flex items-center text-sm font-semibold text-green-400">
-              <i data-lucide="arrow-up-right" class="w-4 h-4 mr-1"></i> En línea
-            </span>
-          </div>
-        </div>
 
-        <!-- Tarjeta 2 -->
-        <div class="relative overflow-hidden rounded-xl bg-gray-800 px-4 pt-5 pb-8 shadow-lg sm:px-6 transition-transform duration-300 hover:-translate-y-1">
-          <div class="absolute rounded-md bg-blue-600 p-3">
-            <i data-lucide="file-text" class="w-6 h-6 text-white"></i>
-          </div>
-          <p class="ml-16 truncate text-sm font-medium text-gray-300">Historias Clínicas Activas</p>
-          <div class="ml-16 flex items-baseline pt-2">
-            <p class="text-2xl font-semibold text-white">1,450</p>
-            <span class="ml-2 flex items-center text-sm font-semibold text-green-400">
-              <i data-lucide="arrow-up-right" class="w-4 h-4 mr-1"></i> Total
-            </span>
-          </div>
-        </div>
-
-        <!-- Tarjeta 3 -->
-        <div class="relative overflow-hidden rounded-xl bg-gray-800 px-4 pt-5 pb-8 shadow-lg sm:px-6 transition-transform duration-300 hover:-translate-y-1">
-          <div class="absolute rounded-md bg-blue-600 p-3">
-            <i data-lucide="shield-alert" class="w-6 h-6 text-white"></i>
-          </div>
-          <p class="ml-16 truncate text-sm font-medium text-gray-300">Movimientos Registrados</p>
-          <div class="ml-16 flex items-baseline pt-2">
-            <p class="text-2xl font-semibold text-white">89</p>
-            <span class="ml-2 flex items-center text-sm font-semibold text-green-400">
-              <i data-lucide="arrow-up-right" class="w-4 h-4 mr-1"></i> Hoy
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Acciones Rápidas -->
-      <div>
-        <h2 class="text-xl font-semibold text-gray-200 mb-4">Acciones Rápidas</h2>
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <button onclick="switchTab('usuarios')" class="group flex items-center justify-center rounded-lg border-2 border-dashed border-gray-700 p-6 text-center hover:border-blue-500 hover:bg-gray-800 transition-all duration-200">
-            <i data-lucide="user-plus" class="w-6 h-6 text-gray-400 group-hover:text-blue-500 mr-3 transition-colors"></i>
-            <span class="font-medium text-gray-300 group-hover:text-blue-500 transition-colors">Añadir Nuevo Usuario</span>
-          </button>
-          <button onclick="switchTab('procesos')" class="group flex items-center justify-center rounded-lg border-2 border-dashed border-gray-700 p-6 text-center hover:border-blue-500 hover:bg-gray-800 transition-all duration-200">
-            <i data-lucide="folder-open" class="w-6 h-6 text-gray-400 group-hover:text-blue-500 mr-3 transition-colors"></i>
-            <span class="font-medium text-gray-300 group-hover:text-blue-500 transition-colors">Gestionar Historias</span>
-          </button>
-          <button onclick="switchTab('procesos')" class="group flex items-center justify-center rounded-lg border-2 border-dashed border-gray-700 p-6 text-center hover:border-blue-500 hover:bg-gray-800 transition-all duration-200">
-            <i data-lucide="layout-grid" class="w-6 h-6 text-gray-400 group-hover:text-blue-500 mr-3 transition-colors"></i>
-            <span class="font-medium text-gray-300 group-hover:text-blue-500 transition-colors">Acceder a Procesos</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- VISTA 2: GESTIÓN DE USUARIOS -->
-    <section id="view-usuarios" class="space-y-8 hidden">
-      <div>
-        <h1 class="text-3xl font-bold leading-tight text-white">Gestión de Usuarios</h1>
-        <p class="mt-2 text-lg text-gray-400">Crea y administra las cuentas de los miembros del personal.</p>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
-        <!-- Formulario Simulador -->
-        <div class="lg:col-span-3 bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-md">
-          <form onsubmit="event.preventDefault(); alert('Usuario registrado con éxito (Simulación)');" class="space-y-4">
+          <!-- Filas de Inputs -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-medium text-gray-300">Nombre Completo</label>
-              <input type="text" placeholder="Ej. Dr. Juan Pérez" class="mt-1 w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500" required>
+              <label for="fecha_atencion" class="form-label-dark">Fecha Atención</label>
+              <input type="date" id="fecha_atencion" class="form-input-dark disabled:bg-gray-700/50 disabled:cursor-not-allowed">
+            </div>
+            <div class="relative">
+              <label for="historia_id" class="form-label-dark">Historia</label>
+              <input type="text" id="historia_id" oninput="searchPaciente()" class="form-input-dark pr-10" placeholder="Ej: H-101 (Intenta H-101 o H-102)..." required>
+              <i class="fa-solid fa-magnifying-glass absolute top-9 right-3 text-gray-400"></i>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="documento_numero" class="form-label-dark">DNI</label>
+              <input type="text" id="documento_numero" readonly class="form-input-dark bg-gray-700/50 cursor-not-allowed">
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-300">Correo Electrónico</label>
-              <input type="email" placeholder="juan.perez@hospital.com" class="mt-1 w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500" required>
+              <label class="form-label-dark">Paciente</label>
+              <input type="text" id="paciente_nombre" readonly value="---" class="form-input-dark bg-gray-700/60 cursor-not-allowed text-gray-400">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="consultorio" class="form-label-dark">Consultorio</label>
+              <input type="text" id="consultorio" list="consultorios-list" placeholder="Ej: CARDIOLOGIA" class="form-input-dark disabled:bg-gray-700/50 disabled:cursor-not-allowed">
+              <datalist id="consultorios-list">
+                <option value="CARDIOLOGIA"></option>
+                <option value="PEDIATRIA"></option>
+                <option value="MEDICINA GENERAL"></option>
+                <option value="ODONTOLOGIA"></option>
+                <option value="GINECOLOGIA"></option>
+              </datalist>
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-300">Rol del Personal</label>
-              <select class="mt-1 w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500">
-                <option>Médico General</option>
-                <option>Enfermero/a</option>
-                <option>Administrativo</option>
+              <label for="turno" class="form-label-dark">Turno</label>
+              <select id="turno" class="form-input-dark disabled:bg-gray-700/50 disabled:cursor-not-allowed">
+                <option value="MAÑANA">MAÑANA</option>
+                <option value="TARDE">TARDE</option>
               </select>
             </div>
-            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-lg transition-colors">
-              Registrar Nuevo Usuario
-            </button>
-          </form>
-        </div>
-
-        <!-- Ilustración / Tarjeta Lateral -->
-        <div class="lg:col-span-2 hidden lg:block bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 text-center">
-          <div class="flex justify-center mb-4 text-blue-400">
-            <i data-lucide="user-check" class="w-20 h-20"></i>
           </div>
-          <h3 class="text-lg font-semibold text-white">Registro Seguro</h3>
-          <p class="text-sm text-gray-400 mt-2">
-            Los datos ingresados formarán parte de la red interna de SIGHUNE.
-          </p>
+
+          <div>
+            <label for="observaciones" class="form-label-dark">Observación</label>
+            <textarea id="observaciones" rows="3" class="form-input-dark disabled:bg-gray-700/50 disabled:cursor-not-allowed"></textarea>
+          </div>
+
+          <!-- Botones -->
+          <div class="flex items-center gap-4 pt-4">
+            <button type="submit" class="w-full flex justify-center items-center py-3 px-4 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-colors font-semibold">
+              <i class="fa-solid fa-floppy-disk mr-2"></i> Guardar Movimiento
+            </button>
+            <button type="button" onclick="resetArchivoForm()" class="w-full flex justify-center items-center py-3 px-4 rounded-lg text-white bg-gray-600 hover:bg-gray-500 transition-colors font-semibold">
+              <i class="fa-solid fa-eraser mr-2"></i> Limpiar
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- MOVIMIENTOS TABLE (Basado en MovimientosTable.tsx) -->
+      <div class="w-full bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 overflow-hidden shadow-lg mt-8">
+        <div class="p-4 border-b border-gray-700/80 bg-gray-800/80 flex justify-between items-center">
+          <h3 class="text-lg font-semibold text-white tracking-wide">Movimientos Recientes</h3>
+          <span class="text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2.5 py-1 rounded-full font-medium">En vivo</span>
+        </div>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left text-gray-300">
+            <thead class="text-xs text-gray-400 uppercase bg-gray-900/60 border-b border-gray-700/50">
+              <tr>
+                <th class="px-6 py-3.5">Historia</th>
+                <th class="px-6 py-3.5">Paciente</th>
+                <th class="px-6 py-3.5">Destino</th>
+                <th class="px-6 py-3.5">Estado</th>
+                <th class="px-6 py-3.5">F. Salida</th>
+                <th class="px-6 py-3.5">F. Devolución</th>
+                <th class="px-6 py-3.5">Observaciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-movimientos-body" class="divide-y divide-gray-700/50">
+              <!-- Renderizado dinámico vía JavaScript -->
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
 
-    <!-- VISTA 3: PROCESAMIENTO -->
-    <section id="view-procesos" class="space-y-8 hidden">
-      <div>
-        <h1 class="text-3xl font-bold leading-tight text-white">Módulos de Procesamiento</h1>
-        <p class="mt-2 text-lg text-gray-400">Seleccione un módulo para comenzar a procesar la información.</p>
+    <!-- SECCIÓN: PROCESAMIENTO (Malla/Dashboard) -->
+    <section id="section-procesamiento" class="hidden space-y-6">
+      <h2 class="text-2xl font-bold text-white tracking-wide">Procesamiento de Archivos</h2>
+      <div class="p-8 bg-gray-800/40 rounded-2xl border border-gray-700 text-center space-y-4">
+        <i class="fa-solid fa-cpu text-5xl text-blue-500 animate-pulse"></i>
+        <h3 class="text-xl font-semibold text-white">Módulo de Procesamiento Lote</h3>
+        <p class="text-gray-400 max-w-lg mx-auto">Selecciona archivos para procesamiento masivo de historias clínicas o sincronización de base de datos local.</p>
+        <button class="bg-blue-600 hover:bg-blue-700 px-6 py-2.5 rounded-lg font-semibold transition-colors text-white">
+          Ejecutar Escaneo de Lote
+        </button>
       </div>
+    </section>
 
-      <!-- Cuadrícula de Módulos -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-        
-        <!-- C. Externa -->
-        <div onclick="alert('Módulo de C. Externa seleccionado')" class="bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-blue-500 p-6 rounded-xl text-center cursor-pointer transition-all duration-200 group">
-          <div class="flex justify-center text-blue-400 group-hover:scale-110 transition-transform mb-3">
-            <i data-lucide="users" class="w-10 h-10"></i>
-          </div>
-          <h3 class="font-semibold text-white group-hover:text-blue-400">C. EXTERNA</h3>
-        </div>
-
-        <!-- Hospitalización -->
-        <div onclick="alert('Módulo de Hospitalización seleccionado')" class="bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-blue-500 p-6 rounded-xl text-center cursor-pointer transition-all duration-200 group">
-          <div class="flex justify-center text-blue-400 group-hover:scale-110 transition-transform mb-3">
-            <i data-lucide="building-2" class="w-10 h-10"></i>
-          </div>
-          <h3 class="font-semibold text-white group-hover:text-blue-400">HOSPITALIZACIÓN</h3>
-        </div>
-
-        <!-- Sala -->
-        <div onclick="alert('Módulo de Sala seleccionado')" class="bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-blue-500 p-6 rounded-xl text-center cursor-pointer transition-all duration-200 group">
-          <div class="flex justify-center text-blue-400 group-hover:scale-110 transition-transform mb-3">
-            <i data-lucide="heart-pulse" class="w-10 h-10"></i>
-          </div>
-          <h3 class="font-semibold text-white group-hover:text-blue-400">SALA</h3>
-        </div>
-
-        <!-- Mortuorio -->
-        <div onclick="alert('Módulo de Mortuorio seleccionado')" class="bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-blue-500 p-6 rounded-xl text-center cursor-pointer transition-all duration-200 group">
-          <div class="flex justify-center text-blue-400 group-hover:scale-110 transition-transform mb-3">
-            <i data-lucide="archive" class="w-10 h-10"></i>
-          </div>
-          <h3 class="font-semibold text-white group-hover:text-blue-400">MORTUORIO</h3>
-        </div>
-
-        <!-- Emergencia -->
-        <div onclick="alert('Módulo de Emergencia seleccionado')" class="bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-blue-500 p-6 rounded-xl text-center cursor-pointer transition-all duration-200 group">
-          <div class="flex justify-center text-blue-400 group-hover:scale-110 transition-transform mb-3">
-            <i data-lucide="zap" class="w-10 h-10"></i>
-          </div>
-          <h3 class="font-semibold text-white group-hover:text-blue-400">EMERGENCIA</h3>
-        </div>
-
+    <!-- SECCIÓN: USUARIOS -->
+    <section id="section-usuario" class="hidden space-y-6">
+      <h2 class="text-2xl font-bold text-white tracking-wide">Gestión de Usuarios</h2>
+      <div class="p-8 bg-gray-800/40 rounded-2xl border border-gray-700 text-center">
+        <p class="text-gray-400">Control de permisos de personal de archivo y médicos.</p>
       </div>
     </section>
 
   </main>
 
-  <!-- Lógica de navegación simple -->
+  <!-- LÓGICA JAVASCRIPT INTEGRADA -->
   <script>
-    function switchTab(tabName) {
-      // Ocultar todas las secciones
-      document.querySelectorAll('section').forEach(sec => sec.classList.add('hidden'));
-      
-      // Resetear estilos de botones
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('bg-blue-600', 'text-white');
-        btn.classList.add('text-gray-300', 'hover:bg-gray-700');
-      });
+    // Mock DB local de Pacientes (Simulando pacientesDB)
+    const pacientesDB = {
+      "H-101": { nombre: "Juan", apellidos: "Pérez Gómez", documento_numero: "74839201" },
+      "H-102": { nombre: "María", apellidos: "Torres López", documento_numero: "45920182" },
+      "H-103": { nombre: "Carlos", apellidos: "Mendoza Ruiz", documento_numero: "10293847" }
+    };
 
-      // Mostrar la sección seleccionada
-      document.getElementById(`view-${tabName}`).classList.remove('hidden');
+    // Estado inicial de movimientos (Simulando la vista inicial)
+    let movimientosData = [
+      {
+        id: 1,
+        historia_id: "H-101",
+        paciente_nombre: "Pérez Gómez, Juan",
+        consultorio: "CARDIOLOGIA",
+        estado: "CITADO",
+        fecha_salida: new Date().toISOString(),
+        fecha_devolucion: null,
+        observaciones: "Atención programada por la mañana"
+      },
+      {
+        id: 2,
+        historia_id: "H-102",
+        paciente_nombre: "Torres López, María",
+        consultorio: "PEDIATRIA",
+        estado: "RETORNADO",
+        fecha_salida: new Date(Date.now() - 86400000).toISOString(),
+        fecha_devolucion: new Date().toISOString(),
+        observaciones: "Devuelto sin inconvenientes"
+      }
+    ];
 
-      // Resaltar el botón activo
-      const activeBtn = document.getElementById(`tab-${tabName}`);
-      activeBtn.classList.add('bg-blue-600', 'text-white');
-      activeBtn.classList.remove('text-gray-300', 'hover:bg-gray-700');
+    let currentPatient = null;
+
+    // Inicializar la vista
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("fecha_atencion").value = new Date().toISOString().split("T")[0];
+      renderMovimientosTable();
+    });
+
+    // Control de Pestañas
+    function switchTab(tab) {
+      document.getElementById("section-archivo").classList.add("hidden");
+      document.getElementById("section-procesamiento").classList.add("hidden");
+      document.getElementById("section-usuario").classList.add("hidden");
+
+      document.getElementById("nav-archivo").className = "px-3 py-2 rounded-md text-sm font-medium flex items-center text-gray-300 hover:bg-gray-700/60 hover:text-white";
+      document.getElementById("nav-procesamiento").className = "px-3 py-2 rounded-md text-sm font-medium flex items-center text-gray-300 hover:bg-gray-700/60 hover:text-white";
+      document.getElementById("nav-usuario").className = "px-3 py-2 rounded-md text-sm font-medium flex items-center text-gray-300 hover:bg-gray-700/60 hover:text-white";
+
+      document.getElementById(`section-${tab}`).classList.remove("hidden");
+      document.getElementById(`nav-${tab}`).className = "px-3 py-2 rounded-md text-sm font-medium flex items-center bg-gray-800 text-white font-semibold";
     }
 
-    // Inicializar iconos de Lucide
-    lucide.createIcons();
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobile-menu");
+      menu.classList.toggle("hidden");
+    }
+
+    // Comportamiento del Formulario según Estado (Retornado deshabilita campos)
+    function handleEstadoChange() {
+      const estado = document.querySelector('input[name="estado"]:checked').value;
+      const isReturnMode = estado === "RETORNADO";
+
+      const inputsToToggle = ["fecha_atencion", "consultorio", "turno", "observaciones"];
+      inputsToToggle.forEach(id => {
+        document.getElementById(id).disabled = isReturnMode;
+        if (isReturnMode) document.getElementById(id).value = "";
+      });
+    }
+
+    // Búsqueda en Vivo de Paciente
+    function searchPaciente() {
+      const val = document.getElementById("historia_id").value.trim().toUpperCase();
+      const patient = pacientesDB[val];
+
+      const inputNombre = document.getElementById("paciente_nombre");
+      const inputDni = document.getElementById("documento_numero");
+
+      if (patient) {
+        currentPatient = patient;
+        inputNombre.value = `${patient.apellidos}, ${patient.nombre}`;
+        inputNombre.className = "form-input-dark bg-gray-700/60 cursor-not-allowed text-green-300 font-medium";
+        inputDni.value = patient.documento_numero;
+      } else {
+        currentPatient = null;
+        inputNombre.value = "---";
+        inputNombre.className = "form-input-dark bg-gray-700/60 cursor-not-allowed text-gray-400";
+        inputDni.value = "";
+      }
+    }
+
+    // Envío del Formulario
+    function handleArchivoSubmit(event) {
+      event.preventDefault();
+
+      if (!currentPatient) {
+        alert("No se puede guardar. Por favor, ingrese un número de historia válido (Prueba con H-101 o H-102).");
+        return;
+      }
+
+      const estado = document.querySelector('input[name="estado"]:checked').value;
+      
+      const nuevoMovimiento = {
+        id: Date.now(),
+        historia_id: document.getElementById("historia_id").value.toUpperCase(),
+        paciente_nombre: `${currentPatient.apellidos}, ${currentPatient.nombre}`,
+        consultorio: document.getElementById("consultorio").value || "---",
+        estado: estado,
+        fecha_salida: new Date().toISOString(),
+        fecha_devolucion: estado === "RETORNADO" ? new Date().toISOString() : null,
+        observaciones: document.getElementById("observaciones").value || ""
+      };
+
+      movimientosData.unshift(nuevoMovimiento);
+      renderMovimientosTable();
+      resetArchivoForm();
+    }
+
+    function resetArchivoForm() {
+      document.getElementById("archivo-form").reset();
+      document.getElementById("fecha_atencion").value = new Date().toISOString().split("T")[0];
+      searchPaciente();
+      handleEstadoChange();
+    }
+
+    // Renderizado de Tabla con Formato de Fechas e Insignias de Estado
+    function renderMovimientosTable() {
+      const tbody = document.getElementById("tabla-movimientos-body");
+      
+      if (movimientosData.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colSpan="7" class="text-center py-10 text-gray-400 font-medium">
+              No hay movimientos registrados.
+            </td>
+          </tr>`;
+        return;
+      }
+
+      const estadoColors = {
+        CITADO: "bg-blue-500/20 text-blue-300 border border-blue-500/30",
+        RETORNADO: "bg-green-500/20 text-green-300 border border-green-500/30",
+        "NO UBICADA": "bg-red-500/20 text-red-300 border border-red-500/30"
+      };
+
+      const formatDateSafe = (dateStr) => {
+        if (!dateStr) return "---";
+        const d = new Date(dateStr);
+        return isNaN(d.getTime()) ? "---" : d.toLocaleDateString("es-ES", { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' });
+      };
+
+      tbody.innerHTML = movimientosData.map(mov => {
+        const badgeClass = estadoColors[mov.estado] || "bg-gray-500/20 text-gray-300 border border-gray-500/30";
+        return `
+          <tr class="hover:bg-gray-700/30 transition-colors duration-150 border-b border-gray-700/50">
+            <td class="px-6 py-4 font-mono font-medium text-blue-400">${mov.historia_id}</td>
+            <td class="px-6 py-4 font-medium text-white">${mov.paciente_nombre}</td>
+            <td class="px-6 py-4">${mov.consultorio}</td>
+            <td class="px-6 py-4">
+              <span class="inline-block px-2.5 py-1 text-xs font-semibold rounded-full ${badgeClass}">
+                ${mov.estado}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">${formatDateSafe(mov.fecha_salida)}</td>
+            <td class="px-6 py-4 whitespace-nowrap">${formatDateSafe(mov.fecha_devolucion)}</td>
+            <td class="px-6 py-4 max-w-[200px] truncate text-gray-400" title="${mov.observaciones || ''}">
+              ${mov.observaciones || '---'}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
   </script>
 </body>
 </html>
